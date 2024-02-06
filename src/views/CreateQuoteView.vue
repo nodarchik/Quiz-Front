@@ -36,76 +36,90 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue';
 import axios from 'axios';
 
-const question = ref({ quote: '', type: 'binary' });
-const answers = ref([{ answer: '' }]);
-const correctAnswerIndex = ref(null);
-const error = ref('');
+export default defineComponent({
+  setup() {
+    const question = ref({ quote: '', type: 'binary' });
+    const answers = ref([{ answer: '' }]);
+    const correctAnswerIndex = ref(null);
+    const error = ref('');
 
-const canAddMoreAnswers = computed(() => {
-  return question.value.type === 'binary' ? answers.value.length < 2 : answers.value.length < 3;
-});
-
-const addAnswer = () => {
-  if (canAddMoreAnswers.value) {
-    answers.value.push({ answer: '' });
-  }
-};
-
-const removeAnswer = (index) => {
-  answers.value.splice(index, 1);
-};
-
-const submitQuestion = async () => {
-  error.value = '';
-
-  // Validation for the minimum number of answers
-  const minimumAnswersRequired = question.value.type === 'binary' ? 2 : 3;
-  if (answers.value.length < minimumAnswersRequired) {
-    error.value = `A ${question.value.type} question requires at least ${minimumAnswersRequired} answers.`;
-    return;
-  }
-
-  // Validation to ensure at least one answer is marked as correct
-  if (correctAnswerIndex.value === null || correctAnswerIndex.value >= answers.value.length) {
-    error.value = 'At least one answer must be marked as correct.';
-    return;
-  }
-
-  try {
-    // Create question
-    const questionResponse = await axios.post('http://127.0.0.1:8000/api/admin/quotes', question.value, {
-      headers: {Authorization: `Bearer ${localStorage.getItem('authToken')}`},
+    const canAddMoreAnswers = computed(() => {
+      return question.value.type === 'binary' ? answers.value.length < 2 : answers.value.length < 3;
     });
-    const questionId = questionResponse.data.data.id;
 
-    // Create answers
-    for (const [index, answer] of answers.value.entries()) {
-      await axios.post('http://127.0.0.1:8000/api/admin/answers', {
-        quote_id: questionId,
-        answer: answer.answer,
-        is_correct: index === correctAnswerIndex.value,
-      }, {
-        headers: {Authorization: `Bearer ${localStorage.getItem('authToken')}`},
-      });
-    }
+    const addAnswer = () => {
+      if (canAddMoreAnswers.value) {
+        answers.value.push({ answer: '' });
+      }
+    };
 
-    // Reset form and provide feedback
-    question.value = {quote: '', type: 'binary'};
-    answers.value = [{answer: ''}];
-    correctAnswerIndex.value = null;
-    alert('Question and answers created successfully!');
-  } catch (err) {
-    error.value = err.response && err.response.data.message ? err.response.data.message : 'An error occurred.';
-  }
-};
+    const removeAnswer = (index: number) => {
+      answers.value.splice(index, 1);
+    };
 
+    const submitQuestion = async () => {
+      error.value = '';
 
+      // Validation for the minimum number of answers
+      const minimumAnswersRequired = question.value.type === 'binary' ? 2 : 3;
+      if (answers.value.length < minimumAnswersRequired) {
+        error.value = `A ${question.value.type} question requires at least ${minimumAnswersRequired} answers.`;
+        return;
+      }
+
+      // Validation to ensure at least one answer is marked as correct
+      if (correctAnswerIndex.value === null || correctAnswerIndex.value >= answers.value.length) {
+        error.value = 'At least one answer must be marked as correct.';
+        return;
+      }
+
+      try {
+        console.log(question.value); // Add this line
+
+        // Create question
+        const questionResponse = await axios.post('http://127.0.0.1:8000/api/admin/quotes', question.value, {
+          headers: {Authorization: `Bearer ${localStorage.getItem('authToken')}`},
+        });
+        const questionId = questionResponse.data.data.id;
+
+        // Create answers
+        for (const [index, answer] of answers.value.entries()) {
+          await axios.post('http://127.0.0.1:8000/api/admin/answers', {
+            quote_id: questionId,
+            answer: answer.answer,
+            is_correct: index === correctAnswerIndex.value,
+          }, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('authToken')}`},
+          });
+        }
+
+        // Reset form and provide feedback
+        question.value = {quote: '', type: 'binary'};
+        answers.value = [{answer: ''}];
+        correctAnswerIndex.value = null;
+        alert('Question and answers created successfully!');
+      } catch (err) {
+        error.value = err.response && err.response.data.message ? err.response.data.message : 'An error occurred.';
+      }
+    };
+
+    return {
+      question,
+      answers,
+      correctAnswerIndex,
+      error,
+      canAddMoreAnswers,
+      addAnswer,
+      removeAnswer,
+      submitQuestion
+    };
+  },
+});
 </script>
-
 
 <style scoped>
 .answer-group {

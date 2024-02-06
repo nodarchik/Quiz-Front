@@ -8,6 +8,7 @@ import CreateQuoteView  from '../views/CreateQuoteView.vue'
 import QuestionnairesView  from '../views/QuestionnairesView.vue'
 import EditQuoteView from '../views/EditQuoteView.vue'
 import TopScorersView from "@/views/TopScorersView.vue";
+import RegisterView from "@/views/RegisterView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,9 +59,14 @@ const router = createRouter({
             component: TopScorersView
         },
         {
+          path: '/registration',
+            name: 'registration',
+            component: RegisterView
+        },
+        {
             path: '/:pathMatch(.*)*',
             redirect: { name: 'Home' }
-        }
+        },
     ]
 })
 

@@ -5,6 +5,7 @@
       <router-link to="/createquote" class="btn btn-success me-2">Create Quote</router-link>
       <router-link to="/questionnaires" class="btn btn-warning me-2">Edit Quote</router-link>
       <router-link to="/Home" class="btn btn-primary me-2">Back to Home</router-link>
+      <router-link to="/registration" class="btn btn-primary me-2">Registration</router-link>
     </div>
     <div class="table-responsive">
       <table class="table">
