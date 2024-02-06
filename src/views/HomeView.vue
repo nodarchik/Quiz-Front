@@ -10,6 +10,7 @@
     <h1>Select Action</h1>
     <div class="mt-3">
       <button v-if="isAdmin" @click="goToAdminPage" class="btn btn-danger me-2">Go to Admin Page</button>
+      <router-link to="/top-scorers" class="btn btn-info me-2">Top Scorers</router-link>
       <button @click="logout" class="btn btn-danger">Logout</button>
     </div>
   </div>

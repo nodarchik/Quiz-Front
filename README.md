@@ -1,25 +1,26 @@
-# Quiz-Front
+# Famous Quote Quiz
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
 
-## Recommended IDE Setup
+Famous quote quiz where the user will have to pick
+a correct answer to the asked questions. Depending on selected mode he/she will choose
+from a list of answers, or simply to answer with Yes/No to the question.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+You start from login page admin user is already created with email: nodaritchikadze@flatrocktech.com and password: flatrocktech.
 
-## Type Support for `.vue` Imports in TS
+On home page you see Select Quiz Mode and Select Action Headers, where you can select quiz mode and action.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+We have two types of quiz modes: Binary and Multiple Choice. By clicking on button you can select quiz mode.
+You will have 5 minutes to answer 10 questions. After 5 minutes or finishing quiz you will be redirected to ResultsView and you will see your score.
+During quiz you can see timer on top.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+after login you go on home page admin can see go to admin page button it is not visible for regular user.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Customize configuration
+## Prerequisites
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Node.js v20.11.0
+- npm 10.2.4
 
 ## Project Setup
 
