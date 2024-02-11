@@ -71,7 +71,7 @@ const multipleChoicePage = ref(0);
 const fetchBinaryQuestionnaires = async (page = 1) => {
   try {
     const token = localStorage.getItem('authToken');
-    const response = await axios.get(`http://127.0.0.1:8000/api/admin/questionnaires?pagination=${pageSize}&page=${page}`, {
+    const response = await axios.get(`http://127.0.0.1:8000/api/admin/questionnaires/binary?pagination=${pageSize}&page=${page}`, {
       headers: {Authorization: `Bearer ${token}`},
     });
     binaryQuestionnaires.value = response.data.data;
@@ -83,7 +83,7 @@ const fetchBinaryQuestionnaires = async (page = 1) => {
 const fetchMultipleChoiceQuestionnaires = async (page = 1) => {
   try {
     const token = localStorage.getItem('authToken');
-    const response = await axios.get(`http://127.0.0.1:8000/api/admin/questionnaires?pagination=${pageSize}&page=${page}`, {
+    const response = await axios.get(`http://127.0.0.1:8000/api/admin/questionnaires/multiple-choice?pagination=${pageSize}&page=${page}`, {
       headers: {Authorization: `Bearer ${token}`},
     });
     multipleChoiceQuestionnaires.value = response.data.data;
